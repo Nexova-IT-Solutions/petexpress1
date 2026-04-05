@@ -26,23 +26,23 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   }
 
   return (
-    <article className="flex flex-col w-full bg-slate-50 min-h-screen">
-      <section className="bg-brand-navy pt-8 pb-20">
+    <article className="flex flex-col w-full bg-white min-h-screen">
+      <section className="bg-gray-100 pt-8 pb-20">
         <div className="container mx-auto px-4">
-          <Link href="/blog" className="inline-flex items-center text-slate-400 hover:text-white mb-8 transition-colors text-sm font-medium">
+          <Link href="/blog" className="inline-flex items-center text-gray-600 hover:text-brand-red mb-8 transition-colors text-sm font-medium">
             <ArrowLeft className="w-4 h-4 mr-2" /> Back to Travel Guides
           </Link>
           
           <div className="max-w-3xl mx-auto text-center">
-            <div className="flex items-center justify-center gap-4 text-sm font-medium text-slate-400 mb-6">
+            <div className="flex items-center justify-center gap-4 text-sm font-medium text-gray-600 mb-6">
               <span className="flex items-center gap-1"><Calendar className="w-4 h-4" /> {new Date(post.publishedAt).toLocaleDateString()}</span>
               <span className="flex items-center gap-1"><User className="w-4 h-4" /> {post.author}</span>
             </div>
             
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
               {post.title}
             </h1>
-            <p className="text-xl text-slate-300">
+            <p className="text-xl text-gray-700">
               {post.excerpt}
             </p>
           </div>
@@ -54,8 +54,8 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           <div className="max-w-3xl mx-auto bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
              
              {/* Featured Image */}
-             <div className="h-64 sm:h-96 bg-brand-navy/10 relative w-full overflow-hidden flex items-center justify-center">
-                <div className="text-slate-400 font-medium">Image: {post.title}</div>
+             <div className="h-64 sm:h-96 bg-gray-300/20 relative w-full overflow-hidden flex items-center justify-center">
+                <div className="text-gray-500 font-medium">Image: {post.title}</div>
              </div>
 
              {/* Content Body */}

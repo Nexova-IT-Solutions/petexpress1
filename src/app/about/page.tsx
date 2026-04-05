@@ -22,7 +22,7 @@ export default function AboutPage() {
   return (
     <div className="flex flex-col w-full">
       {/* Page Header */}
-      <section className="bg-brand-black text-white pt-24 pb-12 overflow-hidden relative">
+      <section className="bg-gray-100 text-gray-900 pt-24 pb-12 overflow-hidden relative">
         <div className="absolute top-0 right-0 w-64 h-64 bg-brand-red/10 rounded-full -mr-20 -mt-20 blur-3xl"></div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <motion.h1 
@@ -82,7 +82,7 @@ export default function AboutPage() {
                   </div>
                 </div>
                 <div className="flex items-start gap-4 group">
-                  <div className="w-12 h-12 rounded-full bg-zinc-900 flex items-center justify-center shrink-0 text-white group-hover:scale-110 transition-transform">
+                  <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center shrink-0 text-gray-900 group-hover:scale-110 transition-transform">
                     <Globe2 className="w-6 h-6" />
                   </div>
                   <div>
@@ -97,10 +97,10 @@ export default function AboutPage() {
       </section>
 
       {/* Certifications */}
-      <section className="py-32 bg-zinc-950 text-white">
+      <section className="py-32 bg-gray-50 text-gray-900">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-5xl md:text-7xl font-black mb-12 tracking-tighter">OUR ACCREDITATIONS</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto mb-20 text-lg">
+          <p className="text-gray-600 max-w-2xl mx-auto mb-20 text-lg">
             We operate strictly under the guidelines of independent global authorities, ensuring the absolute safety, comfort, and dignified treatment of your pets.
           </p>
           
@@ -140,7 +140,7 @@ export default function AboutPage() {
                 className="group flex flex-col items-center text-center"
               >
                 <div className="w-64 h-64 rounded-full bg-muted mb-10 overflow-hidden border-8 border-white shadow-2xl group-hover:border-brand-red transition-all relative">
-                    <div className="absolute inset-0 bg-brand-black/20 group-hover:bg-transparent transition-colors"></div>
+                    <div className="absolute inset-0 bg-gray-900/20 group-hover:bg-transparent transition-colors"></div>
                     <div className="w-full h-full flex items-center justify-center text-muted-foreground font-bold">
                        IMAGE
                     </div>

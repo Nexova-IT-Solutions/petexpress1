@@ -76,7 +76,7 @@ export default function Home() {
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                 className="absolute -bottom-6 -left-6 bg-white p-6 rounded-3xl shadow-xl border border-muted flex items-center gap-4 hidden md:flex"
               >
-                <div className="w-12 h-12 bg-zinc-900 rounded-full flex items-center justify-center text-white">
+                <div className="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center text-brand-red">
                   <Star className="fill-brand-red text-brand-red" />
                 </div>
                 <div>
@@ -169,7 +169,7 @@ export default function Home() {
               viewport={{ once: true }}
               className="relative aspect-square w-full"
             >
-              <div className="absolute inset-4 bg-zinc-900 rounded-[30%_70%_70%_30%/30%_30%_70%_70%] rotate-6 overflow-hidden">
+              <div className="absolute inset-4 bg-gray-300 rounded-[30%_70%_70%_30%/30%_30%_70%_70%] rotate-6 overflow-hidden">
                 <NextImage 
                   src="/images/home/hero-pet.png" 
                   alt="Relocation team" 
@@ -283,7 +283,7 @@ export default function Home() {
             <Button size="lg" className="bg-white text-brand-red hover:bg-zinc-100 rounded-full px-16 py-8 text-xl font-black uppercase tracking-tighter">
               Get a Quote
             </Button>
-            <Button size="lg" className="bg-brand-black text-white hover:bg-zinc-900 rounded-full px-16 py-8 text-xl font-black uppercase tracking-tighter border-none">
+            <Button size="lg" className="bg-brand-red text-white hover:bg-brand-red/90 rounded-full px-16 py-8 text-xl font-black uppercase tracking-tighter border-none">
               Contact Us
             </Button>
           </div>

@@ -28,11 +28,11 @@ export default async function SubServicePage({ params }: { params: Promise<{ cat
   }
 
   return (
-    <div className="flex flex-col w-full bg-slate-50 min-h-screen">
+    <div className="flex flex-col w-full bg-white min-h-screen">
       {/* Breadcrumbs & Header */}
-      <section className="bg-brand-navy pt-8 pb-16">
+      <section className="bg-gray-100 pt-8 pb-16">
         <div className="container mx-auto px-4">
-          <Link href={`/services/${category}`} className="inline-flex items-center text-slate-400 hover:text-white mb-8 transition-colors text-sm font-medium">
+          <Link href={`/services/${category}`} className="inline-flex items-center text-gray-600 hover:text-brand-red mb-8 transition-colors text-sm font-medium">
             <ArrowLeft className="w-4 h-4 mr-2" /> Back to {parentCategory.title}
           </Link>
           
@@ -40,7 +40,7 @@ export default async function SubServicePage({ params }: { params: Promise<{ cat
             title={subService.title} 
             subtitle="PetExpress end-to-end relocation expertise."
             alignment="left"
-            className="text-white max-w-3xl mb-0" 
+            className="text-gray-900 max-w-3xl mb-0" 
           />
         </div>
       </section>
@@ -79,9 +79,9 @@ export default async function SubServicePage({ params }: { params: Promise<{ cat
             
             {/* Sidebar CTA */}
             <div className="space-y-6">
-              <div className="bg-brand-navy text-white rounded-2xl shadow-sm border border-brand-navy-accent p-8 text-center sticky top-28">
+              <div className="bg-gray-100 text-gray-900 rounded-2xl shadow-sm border border-gray-200 p-8 text-center sticky top-28">
                 <h3 className="text-2xl font-bold mb-4">Ready to Fly?</h3>
-                <p className="text-slate-300 mb-8 max-w-[250px] mx-auto text-sm leading-relaxed">
+                <p className="text-gray-700 mb-8 max-w-[250px] mx-auto text-sm leading-relaxed">
                   Every pet's travel needs are unique. Let our accredited experts build a customized travel itinerary.
                 </p>
                 
@@ -89,14 +89,14 @@ export default async function SubServicePage({ params }: { params: Promise<{ cat
                   <Button variant="primary" className="w-full flex justify-center items-center gap-2">
                     <FileVideo className="w-4 h-4" /> Get Final Quote
                   </Button>
-                  <Button variant="outline" className="w-full bg-transparent border-slate-600 text-slate-200 hover:bg-slate-800 hover:text-white hover:border-slate-500">
+                  <Button variant="outline" className="w-full bg-transparent border-gray-400 text-gray-900 hover:bg-gray-200 hover:text-gray-900 hover:border-gray-500">
                     <MessageSquare className="w-4 h-4 mr-2" /> WhatsApp Us
                   </Button>
                 </div>
                 
-                <hr className="my-8 border-slate-700" />
+                <hr className="my-8 border-gray-300" />
                 
-                <div className="text-slate-400 text-sm">Or call us direct</div>
+                <div className="text-gray-600 text-sm">Or call us direct</div>
                 <div className="flex justify-center items-center gap-2 mt-2 font-bold text-lg">
                   <Phone className="w-5 h-5 text-brand-orange" />
                   <span>+94 77 22 88 181</span>

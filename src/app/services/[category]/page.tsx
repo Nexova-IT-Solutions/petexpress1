@@ -28,20 +28,20 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
 
   return (
     <div className="flex flex-col w-full">
-      <section className="bg-brand-navy pt-16 pb-12">
+      <section className="bg-gray-100 pt-16 pb-12">
         <div className="container mx-auto px-4 text-center">
           <SectionHeading 
             title={service.title} 
             subtitle={service.shortDescription}
-            className="mb-0 text-slate-100 max-w-3xl" 
+            className="mb-0 text-gray-900 max-w-3xl" 
             alignment="center" 
           />
         </div>
       </section>
 
-      <section className="py-20 bg-slate-50">
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-brand-navy mb-10">Available Specialized Services</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-10">Available Specialized Services</h2>
           
           {service.subServices.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -49,7 +49,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
                 <Card key={subService.id} className="group hover:-translate-y-1 transition-all h-full flex flex-col">
                   {/* Decorative Header Image */}
                   <div className="h-40 bg-slate-200 w-full overflow-hidden relative">
-                    <div className="absolute inset-0 bg-brand-navy/60 mix-blend-overlay"></div>
+                    <div className="absolute inset-0 bg-gray-300/60 mix-blend-overlay"></div>
                     <div className="absolute inset-0 flex items-center p-6 text-white text-sm font-medium">Image Placeholder</div>
                   </div>
                   

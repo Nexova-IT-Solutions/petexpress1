@@ -22,7 +22,7 @@ export default function BlogPage() {
 
   return (
     <div className="flex flex-col w-full">
-      <section className="bg-brand-black text-white pt-24 pb-12 overflow-hidden relative">
+      <section className="bg-gray-100 text-gray-900 pt-24 pb-12 overflow-hidden relative">
         <div className="absolute top-0 right-0 w-64 h-64 bg-brand-red/10 rounded-full -mr-20 -mt-20 blur-3xl"></div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <motion.h1 
@@ -50,7 +50,7 @@ export default function BlogPage() {
                 transition={{ delay: i * 0.1 }}
               >
                 <Card className="group border-none shadow-2xl shadow-zinc-200/50 rounded-3xl h-full flex flex-col overflow-hidden hover:scale-[1.02] transition-transform duration-500">
-                  <div className="h-64 bg-zinc-950 relative w-full overflow-hidden">
+                  <div className="h-64 bg-gray-300 relative w-full overflow-hidden">
                      <div className="absolute inset-0 bg-brand-red/20 group-hover:bg-transparent transition-all duration-700"></div>
                      <div className="absolute inset-0 flex items-center justify-center text-white/50 text-xs font-black uppercase tracking-widest">Featured Image</div>
                   </div>

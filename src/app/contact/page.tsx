@@ -24,7 +24,7 @@ export default function ContactPage() {
 
   return (
     <div className="flex flex-col w-full bg-white min-h-screen pb-32">
-      <section className="bg-brand-black text-white pt-24 pb-12 overflow-hidden relative">
+      <section className="bg-gray-100 text-gray-900 pt-24 pb-12 overflow-hidden relative">
         <div className="absolute top-0 right-0 w-64 h-64 bg-brand-red/10 rounded-full -mr-20 -mt-20 blur-3xl"></div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <motion.h1 
@@ -34,7 +34,7 @@ export default function ContactPage() {
           >
             GET IN <span className="text-brand-red">TOUCH</span>
           </motion.h1>
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto font-medium uppercase tracking-widest leading-relaxed">
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto font-medium uppercase tracking-widest leading-relaxed">
             We'd love to hear from you. Get in touch with our expert pet relocation consultants.
           </p>
         </div>
@@ -114,7 +114,7 @@ export default function ContactPage() {
             viewport={{ once: true }}
             className="space-y-12"
           >
-            <div className="bg-brand-black text-white p-10 md:p-16 rounded-[40px] shadow-2xl shadow-zinc-900 border border-zinc-800 relative overflow-hidden">
+            <div className="bg-gray-100 text-gray-900 p-10 md:p-16 rounded-[40px] shadow-2xl shadow-gray-200 border border-gray-300 relative overflow-hidden">
               <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-brand-red/20 rounded-full blur-3xl"></div>
               <h2 className="text-4xl font-black mb-12 tracking-tighter uppercase">CONTACT <br />INFO</h2>
               
@@ -155,7 +155,7 @@ export default function ContactPage() {
             </div>
 
             <div className="h-80 bg-muted rounded-[40px] border border-muted overflow-hidden relative group">
-              <div className="absolute inset-0 bg-brand-black/40 group-hover:bg-brand-black/10 transition-colors duration-700"></div>
+              <div className="absolute inset-0 bg-gray-300/20 group-hover:bg-gray-200/10 transition-colors duration-700"></div>
               <div className="w-full h-full flex items-center justify-center">
                  <p className="text-white font-black uppercase tracking-widest text-xl rotate-12">BIA LOCATION MAP</p>
               </div>

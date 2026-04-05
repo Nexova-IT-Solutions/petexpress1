@@ -12,7 +12,7 @@ export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-white/80 backdrop-blur-md border-b border-muted">
+    <header className="sticky top-0 z-40 w-full bg-white/80 backdrop-blur-md border-b border-gray-200">
       <div className="container mx-auto px-4 h-20 flex items-center justify-between">
         {/* Mobile Logo Only */}
         <Link href="/" className="flex items-center lg:hidden group h-20">
@@ -41,7 +41,7 @@ export function Header() {
           </Button>
 
           <button
-            className="lg:hidden text-brand-black hover:text-brand-red p-2 bg-muted rounded-xl transition-colors"
+            className="lg:hidden text-gray-600 hover:text-brand-red p-2 bg-gray-200 rounded-xl transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -51,7 +51,7 @@ export function Header() {
 
       {/* Mobile Sidebar overlay */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 top-20 z-50 bg-brand-black">
+        <div className="lg:hidden fixed inset-0 top-20 z-50 bg-white">
           <Sidebar className="w-full border-none" />
         </div>
       )}

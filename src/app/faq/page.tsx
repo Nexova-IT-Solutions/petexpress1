@@ -33,7 +33,7 @@ export default function FAQPage() {
 
   return (
     <div className="flex flex-col w-full bg-white min-h-screen pb-32">
-      <section className="bg-brand-black text-white pt-24 pb-12 overflow-hidden relative">
+      <section className="bg-gray-100 text-gray-900 pt-24 pb-12 overflow-hidden relative">
         <div className="absolute top-0 right-0 w-64 h-64 bg-brand-red/10 rounded-full -mr-20 -mt-20 blur-3xl"></div>
         <div className="container mx-auto px-4 text-center relative z-10">
           <motion.h1 

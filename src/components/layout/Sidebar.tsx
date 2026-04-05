@@ -43,9 +43,9 @@ export function Sidebar({ className = "" }: { className?: string }) {
   ];
 
   return (
-    <aside className={`flex flex-col h-full bg-zinc-950 text-white border-r border-zinc-900/50 group/sidebar ${className}`}>
+    <aside className={`flex flex-col h-full bg-white text-gray-900 border-r border-gray-200/50 group/sidebar ${className}`}>
       {/* 1. Header (Logo Stays White) */}
-      <div className="bg-white h-20 flex items-center justify-center p-4 border-b border-muted shadow-sm transition-colors duration-500">
+      <div className="bg-white h-20 flex items-center justify-center p-4 border-b border-gray-200 shadow-sm transition-colors duration-500">
         <Link href="/" className="relative group/logo h-full flex items-center">
           <motion.div 
             whileHover={{ scale: 1.05 }}
@@ -75,7 +75,7 @@ export function Sidebar({ className = "" }: { className?: string }) {
                 <button
                   onClick={() => setServicesOpen(!servicesOpen)}
                   className={`w-full flex items-center justify-between px-6 py-4 rounded-xl transition-all relative group ${
-                    isActive ? "text-white bg-zinc-900/40" : "text-zinc-500 hover:text-zinc-200 hover:bg-zinc-900/20"
+                    isActive ? "text-gray-900 bg-gray-100/40" : "text-gray-600 hover:text-gray-900 hover:bg-gray-100/20"
                   }`}
                 >
                   {isActive && (
@@ -105,10 +105,10 @@ export function Sidebar({ className = "" }: { className?: string }) {
                           key={sub.name}
                           href={sub.href}
                           className={`flex items-center gap-4 px-6 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all group/sub ${
-                            pathname === sub.href ? "text-brand-red scale-105" : "text-zinc-600 hover:text-zinc-300"
+                            pathname === sub.href ? "text-brand-red scale-105" : "text-gray-600 hover:text-gray-900"
                           }`}
                         >
-                          <sub.icon className={`w-3.5 h-3.5 ${pathname === sub.href ? "text-brand-red" : "opacity-0 group-hover/sub:opacity-100 transition-opacity"}`} />
+                          <sub.icon className={`w-3.5 h-3.5 transition-colors ${pathname === sub.href ? "text-brand-red" : "text-gray-500 group-hover/sub:text-gray-700"}`} />
                           {sub.name}
                         </Link>
                       ))}
@@ -124,7 +124,7 @@ export function Sidebar({ className = "" }: { className?: string }) {
               key={link.name}
               href={link.href}
               className={`flex items-center gap-5 px-6 py-4 rounded-xl transition-all relative group ${
-                isActive ? "text-white bg-zinc-900/40" : "text-zinc-500 hover:text-zinc-200 hover:bg-zinc-900/20"
+                isActive ? "text-gray-900 bg-gray-100/40" : "text-gray-600 hover:text-gray-900 hover:bg-gray-100/20"
               }`}
             >
               {isActive && (
@@ -142,25 +142,25 @@ export function Sidebar({ className = "" }: { className?: string }) {
       </div>
 
       {/* 3. Utility Footer (Premium Style) */}
-      <div className="p-8 pt-6 border-t border-zinc-900/50 bg-zinc-950/50 backdrop-blur-md">
+      <div className="p-8 pt-6 border-t border-gray-200/50 bg-gray-50/50 backdrop-blur-md">
         <div className="grid grid-cols-1 gap-4 mb-8">
-          <div className="group/item flex items-center gap-4 p-4 rounded-2xl bg-zinc-900/30 hover:bg-zinc-900/60 transition-all border border-zinc-900/50 hover:border-brand-red/20 cursor-pointer">
-            <div className="w-10 h-10 rounded-xl bg-zinc-950 flex items-center justify-center text-brand-red border border-zinc-800 transition-transform group-hover/item:scale-110">
+          <div className="group/item flex items-center gap-4 p-4 rounded-2xl bg-gray-100/30 hover:bg-gray-200/60 transition-all border border-gray-200/50 hover:border-brand-red/20 cursor-pointer">
+            <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-brand-red border border-gray-300 transition-transform group-hover/item:scale-110">
               <Phone className="w-5 h-5" />
             </div>
             <div className="flex flex-col">
-              <span className="text-[10px] text-zinc-600 font-black uppercase tracking-widest leading-none mb-1">Call Booking</span>
-              <span className="text-xs font-black text-zinc-300 group-hover/item:text-white">+94 77 22 88 181</span>
+              <span className="text-[10px] text-gray-600 font-black uppercase tracking-widest leading-none mb-1">Call Booking</span>
+              <span className="text-xs font-black text-gray-900 group-hover/item:text-brand-red">+94 77 22 88 181</span>
             </div>
           </div>
 
-          <div className="group/item flex items-center gap-4 p-4 rounded-2xl bg-zinc-900/30 hover:bg-zinc-900/60 transition-all border border-zinc-900/50 hover:border-brand-red/20 cursor-pointer">
-            <div className="w-10 h-10 rounded-xl bg-zinc-950 flex items-center justify-center text-zinc-400 group-hover/item:text-brand-red border border-zinc-800 transition-transform group-hover/item:scale-110">
+          <div className="group/item flex items-center gap-4 p-4 rounded-2xl bg-gray-100/30 hover:bg-gray-200/60 transition-all border border-gray-200/50 hover:border-brand-red/20 cursor-pointer">
+            <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-gray-600 group-hover/item:text-brand-red border border-gray-300 transition-transform group-hover/item:scale-110">
               <Mail className="w-5 h-5" />
             </div>
             <div className="flex flex-col">
-              <span className="text-[10px] text-zinc-600 font-black uppercase tracking-widest leading-none mb-1">Email Enquiry</span>
-              <span className="text-xs font-black text-zinc-300 group-hover/item:text-white">info@petexpress.lk</span>
+              <span className="text-[10px] text-gray-600 font-black uppercase tracking-widest leading-none mb-1">Email Enquiry</span>
+              <span className="text-xs font-black text-gray-900 group-hover/item:text-brand-red">info@petexpress.lk</span>
             </div>
           </div>
         </div>
