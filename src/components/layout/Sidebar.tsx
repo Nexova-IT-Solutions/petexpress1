@@ -21,7 +21,7 @@ import {
 import { Button } from "@/components/ui/Button";
 import { motion, AnimatePresence } from "framer-motion";
 
-export function Sidebar({ className = "" }: { className?: string }) {
+export function Sidebar({ className = "", onNavigate }: { className?: string; onNavigate?: () => void }) {
   const pathname = usePathname();
   const [servicesOpen, setServicesOpen] = useState(pathname.startsWith("/services"));
 
@@ -104,6 +104,7 @@ export function Sidebar({ className = "" }: { className?: string }) {
                         <Link
                           key={sub.name}
                           href={sub.href}
+                          onClick={onNavigate}
                           className={`flex items-center gap-4 px-6 py-3 rounded-xl text-xs font-black uppercase tracking-widest transition-all group/sub ${
                             pathname === sub.href ? "text-brand-red scale-105" : "text-gray-600 hover:text-gray-900"
                           }`}
@@ -123,6 +124,7 @@ export function Sidebar({ className = "" }: { className?: string }) {
             <Link
               key={link.name}
               href={link.href}
+              onClick={onNavigate}
               className={`flex items-center gap-5 px-6 py-4 rounded-xl transition-all relative group ${
                 isActive ? "text-gray-900 bg-gray-100/40" : "text-gray-600 hover:text-gray-900 hover:bg-gray-100/20"
               }`}

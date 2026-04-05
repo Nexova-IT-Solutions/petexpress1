@@ -51,9 +51,12 @@ export function Header() {
 
       {/* Mobile Sidebar overlay */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 top-20 z-50 bg-white">
-          <Sidebar className="w-full border-none" />
-        </div>
+        <>
+          <div className="lg:hidden fixed inset-0 top-20 z-40 bg-black/50" onClick={() => setIsMobileMenuOpen(false)}></div>
+          <div className="lg:hidden fixed top-20 left-0 right-0 z-50 bg-white h-[calc(100vh-80px)] overflow-y-auto">
+            <Sidebar className="w-full border-none" onNavigate={() => setIsMobileMenuOpen(false)} />
+          </div>
+        </>
       )}
     </header>
   );
