@@ -14,9 +14,11 @@ import {
   ArrowRight,
   ArrowLeft,
   ShieldCheck,
-  ChevronDown,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/Input";
+import { Select } from "@/components/ui/Select";
+import { Textarea } from "@/components/ui/Textarea";
 
 // --- Types & Constants ---
 
@@ -386,66 +388,26 @@ export default function ImportQuotePage() {
                         { label: "State", name: "state" },
                         { label: "Zip Code", name: "zip" },
                       ].map((field) => (
-                        <div
+                        <Input
                           key={field.name}
-                          className={cn(
-                            "space-y-1",
-                            field.span === 2 && "md:col-span-2",
-                          )}
-                        >
-                          <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
-                            {field.label}
-                          </label>
-                          <input
-                            type={field.type || "text"}
-                            name={field.name}
-                            value={(formData as any)[field.name]}
-                            onChange={handleInputChange}
-                            className={cn(
-                              "w-full px-3 py-2 rounded-lg border bg-gray-50/25 text-sm text-gray-900 focus:outline-none transition-all",
-                              errors[field.name]
-                                ? "border-red-400"
-                                : "border-gray-200 focus:border-import-red",
-                            )}
-                          />
-                          {errors[field.name] && (
-                            <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">
-                              {errors[field.name]}
-                            </p>
-                          )}
-                        </div>
+                          label={field.label}
+                          name={field.name}
+                          type={field.type}
+                          value={(formData as any)[field.name]}
+                          onChange={handleInputChange}
+                          error={errors[field.name]}
+                          containerClassName={cn(field.span === 2 && "md:col-span-2")}
+                        />
                       ))}
-                      <div className="space-y-1">
-                        <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
-                          Country *
-                        </label>
-                        <div className="relative">
-                          <select
-                            name="country"
-                            value={formData.country}
-                            onChange={handleInputChange}
-                            className={cn(
-                              "w-full px-3 py-2 rounded-lg border bg-gray-50/25 text-sm text-gray-900 focus:outline-none appearance-none cursor-pointer pr-10 transition-all",
-                              errors.country
-                                ? "border-red-400"
-                                : "border-gray-200 focus:border-import-red",
-                            )}
-                          >
-                            <option value="">Select Country</option>
-                            {COUNTRIES.map((c) => (
-                              <option key={c} value={c}>
-                                {c}
-                              </option>
-                            ))}
-                          </select>
-                          <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-                        </div>
-                        {errors.country && (
-                          <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">
-                            {errors.country}
-                          </p>
-                        )}
-                      </div>
+                      <Select
+                        label="Country *"
+                        name="country"
+                        value={formData.country}
+                        onChange={handleInputChange}
+                        error={errors.country}
+                        options={COUNTRIES}
+                        placeholder="Select Country"
+                      />
                     </div>
 
                     <div className="border-b border-gray-100 pb-2">
@@ -455,81 +417,30 @@ export default function ImportQuotePage() {
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3">
-                      <div className="space-y-1">
-                        <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
-                          Country your pet(s) will be travelling from *
-                        </label>
-                        <div className="relative">
-                          <select
-                            name="originCountry"
-                            value={formData.originCountry}
-                            onChange={handleInputChange}
-                            className={cn(
-                              "w-full px-3 py-2 rounded-lg border bg-gray-50/25 text-sm text-gray-900 focus:outline-none appearance-none pr-10 transition-all",
-                              errors.originCountry
-                                ? "border-red-400"
-                                : "border-gray-200 focus:border-import-red",
-                            )}
-                          >
-                            <option value="">Select Origin</option>
-                            {COUNTRIES.map((c) => (
-                              <option key={c} value={c}>
-                                {c}
-                              </option>
-                            ))}
-                          </select>
-                          <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-                        </div>
-                        {errors.originCountry && (
-                          <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">
-                            {errors.originCountry}
-                          </p>
-                        )}
-                      </div>
-                      <div className="space-y-1">
-                        <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
-                          Airport of departure *
-                        </label>
-                        <input
-                          type="text"
-                          name="departureAirport"
-                          value={formData.departureAirport}
-                          onChange={handleInputChange}
-                          className={cn(
-                            "w-full px-3 py-2 rounded-lg border bg-gray-50/25 text-sm text-gray-900 focus:outline-none",
-                            errors.departureAirport
-                              ? "border-red-400"
-                              : "border-gray-200 focus:border-import-red",
-                          )}
-                        />
-                        {errors.departureAirport && (
-                          <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">
-                            {errors.departureAirport}
-                          </p>
-                        )}
-                      </div>
-                      <div className="space-y-1">
-                        <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
-                          Approximate travel dates *
-                        </label>
-                        <input
-                          type="date"
-                          name="travelDate"
-                          value={formData.travelDate}
-                          onChange={handleInputChange}
-                          className={cn(
-                            "w-full px-3 py-2 rounded-lg border bg-gray-50/25 text-sm text-gray-900 focus:outline-none",
-                            errors.travelDate
-                              ? "border-red-400"
-                              : "border-gray-200 focus:border-import-red",
-                          )}
-                        />
-                        {errors.travelDate && (
-                          <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">
-                            {errors.travelDate}
-                          </p>
-                        )}
-                      </div>
+                      <Select
+                        label="Country your pet(s) will be travelling from *"
+                        name="originCountry"
+                        value={formData.originCountry}
+                        onChange={handleInputChange}
+                        error={errors.originCountry}
+                        options={COUNTRIES}
+                        placeholder="Select Origin"
+                      />
+                      <Input
+                        label="Airport of departure *"
+                        name="departureAirport"
+                        value={formData.departureAirport}
+                        onChange={handleInputChange}
+                        error={errors.departureAirport}
+                      />
+                      <Input
+                        label="Approximate travel dates *"
+                        type="date"
+                        name="travelDate"
+                        value={formData.travelDate}
+                        onChange={handleInputChange}
+                        error={errors.travelDate}
+                      />
                     </div>
 
                     <div className="space-y-3">
@@ -632,28 +543,16 @@ export default function ImportQuotePage() {
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
-                            className="space-y-1"
                           >
-                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
-                              Please provide delivery address in Sri Lanka *
-                            </label>
-                            <textarea
+                            <Textarea
+                              label="Please provide delivery address in Sri Lanka *"
                               name="slDeliveryAddress"
                               value={formData.slDeliveryAddress}
                               onChange={handleInputChange}
                               placeholder="Address in Sri Lanka..."
-                              className={cn(
-                                "w-full h-20 p-3 rounded-lg border bg-gray-50/25 text-sm text-gray-900 focus:outline-none transition-all",
-                                errors.slDeliveryAddress
-                                  ? "border-red-400"
-                                  : "border-gray-200 focus:border-import-red",
-                              )}
+                              error={errors.slDeliveryAddress}
+                              className="h-24"
                             />
-                            {errors.slDeliveryAddress && (
-                              <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">
-                                {errors.slDeliveryAddress}
-                              </p>
-                            )}
                           </motion.div>
                         )}
                       </AnimatePresence>
@@ -707,139 +606,51 @@ export default function ImportQuotePage() {
                           )}
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-2">
-                          <div className="space-y-1">
-                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
-                              Pet Name *
-                            </label>
-                            <input
-                              type="text"
-                              value={pet.name}
-                              onChange={(e) =>
-                                updatePet(pet.id, "name", e.target.value)
-                              }
-                              className={cn(
-                                "w-full px-3 py-2 rounded-lg border bg-white text-sm text-gray-900 focus:outline-none transition-all",
-                                errors[`pet_${index}_name`]
-                                  ? "border-red-400"
-                                  : "border-gray-200 focus:border-import-red",
-                              )}
-                            />
-                            {errors[`pet_${index}_name`] && (
-                              <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">
-                                {errors[`pet_${index}_name`]}
-                              </p>
-                            )}
-                          </div>
-                          <div className="space-y-1">
-                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
-                              Date of Birth *
-                            </label>
-                            <input
-                              type="date"
-                              value={pet.dob}
-                              onChange={(e) =>
-                                updatePet(pet.id, "dob", e.target.value)
-                              }
-                              className={cn(
-                                "w-full px-3 py-2 rounded-lg border bg-white text-sm text-gray-900 focus:outline-none transition-all",
-                                errors[`pet_${index}_dob`]
-                                  ? "border-red-400"
-                                  : "border-gray-200 focus:border-import-red",
-                              )}
-                            />
-                            {errors[`pet_${index}_dob`] && (
-                              <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">
-                                {errors[`pet_${index}_dob`]}
-                              </p>
-                            )}
-                          </div>
-                          <div className="space-y-1">
-                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
-                              Animal Type *
-                            </label>
-                            <div className="relative">
-                              <select
-                                value={pet.type}
-                                onChange={(e) =>
-                                  updatePet(pet.id, "type", e.target.value)
-                                }
-                                className={cn(
-                                  "w-full px-3 py-2 rounded-lg border bg-white text-sm text-gray-900 focus:outline-none transition-all appearance-none cursor-pointer pr-10",
-                                  errors[`pet_${index}_type`]
-                                    ? "border-red-400"
-                                    : "border-gray-200 focus:border-import-red",
-                                )}
-                              >
-                                <option value="">Select Type</option>
-                                {ANIMAL_TYPES.map((t) => (
-                                  <option key={t} value={t}>
-                                    {t}
-                                  </option>
-                                ))}
-                              </select>
-                              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-                            </div>
-                            {errors[`pet_${index}_type`] && (
-                              <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">
-                                {errors[`pet_${index}_type`]}
-                              </p>
-                            )}
-                          </div>
-                          <div className="space-y-1">
-                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
-                              Breed *
-                            </label>
-                            <input
-                              type="text"
-                              value={pet.breed}
-                              onChange={(e) =>
-                                updatePet(pet.id, "breed", e.target.value)
-                              }
-                              className={cn(
-                                "w-full px-3 py-2 rounded-lg border bg-white text-sm text-gray-900 focus:outline-none transition-all",
-                                errors[`pet_${index}_breed`]
-                                  ? "border-red-400"
-                                  : "border-gray-200 focus:border-import-red",
-                              )}
-                            />
-                            {errors[`pet_${index}_breed`] && (
-                              <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">
-                                {errors[`pet_${index}_breed`]}
-                              </p>
-                            )}
-                          </div>
-                          <div className="space-y-1">
-                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
-                              Gender *
-                            </label>
-                            <div className="relative">
-                              <select
-                                value={pet.gender}
-                                onChange={(e) =>
-                                  updatePet(pet.id, "gender", e.target.value)
-                                }
-                                className={cn(
-                                  "w-full px-3 py-2 rounded-lg border bg-white text-sm text-gray-900 focus:outline-none transition-all appearance-none cursor-pointer pr-10",
-                                  errors[`pet_${index}_gender`]
-                                    ? "border-red-400"
-                                    : "border-gray-200 focus:border-import-red",
-                                )}
-                              >
-                                <option value="">Select Gender</option>
-                                {GENDERS.map((g) => (
-                                  <option key={g} value={g}>
-                                    {g}
-                                  </option>
-                                ))}
-                              </select>
-                              <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-                            </div>
-                            {errors[`pet_${index}_gender`] && (
-                              <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">
-                                {errors[`pet_${index}_gender`]}
-                              </p>
-                            )}
-                          </div>
+                          <Input
+                            label="Pet Name *"
+                            value={pet.name}
+                            onChange={(e) =>
+                              updatePet(pet.id, "name", e.target.value)
+                            }
+                            error={errors[`pet_${index}_name`]}
+                          />
+                          <Input
+                            label="Date of Birth *"
+                            type="date"
+                            value={pet.dob}
+                            onChange={(e) =>
+                              updatePet(pet.id, "dob", e.target.value)
+                            }
+                            error={errors[`pet_${index}_dob`]}
+                          />
+                          <Select
+                            label="Animal Type *"
+                            value={pet.type}
+                            onChange={(e) =>
+                              updatePet(pet.id, "type", e.target.value)
+                            }
+                            error={errors[`pet_${index}_type`]}
+                            options={ANIMAL_TYPES}
+                            placeholder="Select Type"
+                          />
+                          <Input
+                            label="Breed *"
+                            value={pet.breed}
+                            onChange={(e) =>
+                              updatePet(pet.id, "breed", e.target.value)
+                            }
+                            error={errors[`pet_${index}_breed`]}
+                          />
+                          <Select
+                            label="Gender *"
+                            value={pet.gender}
+                            onChange={(e) =>
+                              updatePet(pet.id, "gender", e.target.value)
+                            }
+                            error={errors[`pet_${index}_gender`]}
+                            options={GENDERS}
+                            placeholder="Select Gender"
+                          />
                           <div className="space-y-1">
                             <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
                               Microchipped? *
@@ -946,37 +757,25 @@ export default function ImportQuotePage() {
                               ].map((dim) => {
                                 const errKey = `pet_${index}_${dim.key}`;
                                 return (
-                                  <div key={dim.key} className="space-y-0.5">
-                                    <label className="text-[9px] font-black uppercase text-gray-400 leading-tight block">
-                                      {dim.label} (cm)
-                                    </label>
-                                    <input
-                                      type="number"
-                                      value={
-                                        (pet.measurements as any)?.[dim.key] ||
-                                        ""
-                                      }
-                                      onChange={(e) =>
-                                        updatePetMeasurement(
-                                          pet.id,
-                                          dim.key,
-                                          e.target.value,
-                                        )
-                                      }
-                                      className={cn(
-                                        "w-full px-3 py-2 rounded-lg border bg-white text-sm text-gray-900 focus:outline-none transition-all",
-                                        errors[errKey]
-                                          ? "border-red-400"
-                                          : "border-gray-200 focus:border-import-red",
-                                      )}
-                                      placeholder="0"
-                                    />
-                                    {errors[errKey] && (
-                                      <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">
-                                        {errors[errKey]}
-                                      </p>
-                                    )}
-                                  </div>
+                                  <Input
+                                    key={dim.key}
+                                    label={`${dim.label} (cm)`}
+                                    type="number"
+                                    value={
+                                      (pet.measurements as any)?.[dim.key] ||
+                                      ""
+                                    }
+                                    onChange={(e) =>
+                                      updatePetMeasurement(
+                                        pet.id,
+                                        dim.key,
+                                        e.target.value,
+                                      )
+                                    }
+                                    error={errors[errKey]}
+                                    placeholder="0"
+                                    className="bg-white"
+                                  />
                                 );
                               })}
                             </div>
@@ -1216,13 +1015,9 @@ export default function ImportQuotePage() {
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: "auto" }}
                             exit={{ opacity: 0, height: 0 }}
-                            className="space-y-1"
                           >
-                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
-                              Please advise the external measurements of the
-                              crate(s) *
-                            </label>
-                            <textarea
+                            <Textarea
+                              label="Please advise the external measurements of the crate(s) *"
                               value={formData.crateMeasurements}
                               onChange={(e) => {
                                 setFormData((p) => ({
@@ -1236,19 +1031,10 @@ export default function ImportQuotePage() {
                                     return n;
                                   });
                               }}
-                              className={cn(
-                                "w-full h-24 p-3 rounded-lg border bg-white text-sm text-gray-900 focus:outline-none transition-all",
-                                errors.crateMeasurements
-                                  ? "border-red-400"
-                                  : "border-gray-200 focus:border-import-red",
-                              )}
                               placeholder="e.g. Length x Width x Height in cm for each crate..."
+                              error={errors.crateMeasurements}
+                              className="h-24 bg-white"
                             />
-                            {errors.crateMeasurements && (
-                              <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">
-                                {errors.crateMeasurements}
-                              </p>
-                            )}
                           </motion.div>
                         )}
                       </AnimatePresence>
