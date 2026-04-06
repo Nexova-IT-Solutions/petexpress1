@@ -3,33 +3,56 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, PanelLeftClose, PanelLeftOpen } from "lucide-react";
 import Image from "next/image";
+import { cn } from "@/lib/utils";
 
 import { Sidebar } from "./Sidebar";
 import { QuoteModal } from "@/components/ui/QuoteModal";
 
-export function Header() {
+interface HeaderProps {
+  isSidebarOpen?: boolean;
+  toggleSidebar?: () => void;
+}
+
+export function Header({ isSidebarOpen, toggleSidebar }: HeaderProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-40 w-full bg-white/80 backdrop-blur-md border-b border-gray-200">
       <div className="container mx-auto px-4 h-20 flex items-center justify-between">
-        {/* Mobile Logo Only */}
-        <Link href="/" className="flex items-center lg:hidden group h-20">
-          <Image 
-            src="/images/logo.png" 
-            alt="PetExpress Logo" 
-            width={312} 
-            height={124} 
-            className="h-full w-auto object-contain"
-            priority
-          />
-        </Link>
+        <div className="flex items-center gap-4 h-full">
+          {/* Desktop Sidebar Toggle */}
+          {toggleSidebar && (
+            <button
+              onClick={toggleSidebar}
+              className="hidden lg:flex items-center justify-center p-2.5 rounded-xl border border-gray-100 bg-gray-50 text-gray-500 hover:text-brand-red hover:border-brand-red/20 transition-all group shadow-sm active:scale-95"
+              title={isSidebarOpen ? "Collapse Sidebar" : "Expand Sidebar"}
+            >
+              {isSidebarOpen ? (
+                <PanelLeftClose className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              ) : (
+                <PanelLeftOpen className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              )}
+            </button>
+          )}
+
+          {/* Mobile Logo Only */}
+          <Link href="/" className="flex items-center lg:hidden group h-20">
+            <Image 
+              src="/images/logo.png" 
+              alt="PetExpress Logo" 
+              width={312} 
+              height={124} 
+              className="h-full w-auto object-contain"
+              priority
+            />
+          </Link>
+        </div>
         
         {/* Spacer for desktop */}
-        <div className="hidden lg:block"></div>
+        <div className={cn("hidden lg:block transition-all duration-300", isSidebarOpen ? "w-0" : "w-10")}></div>
 
         {/* Global Actions */}
         <div className="flex items-center gap-4">
