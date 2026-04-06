@@ -138,6 +138,13 @@ export default function ImportQuotePage() {
 
   const updatePet = (id: string, field: string, value: any) => {
     setPets(prev => prev.map(p => p.id === id ? { ...p, [field]: value } : p));
+    const petIndex = pets.findIndex(p => p.id === id);
+    const errKey = `pet_${petIndex}_${field}`;
+    if (errors[errKey]) setErrors(prev => {
+      const newErrors = { ...prev };
+      delete newErrors[errKey];
+      return newErrors;
+    });
   };
 
   const updatePetMeasurement = (id: string, field: string, value: string) => {
@@ -153,6 +160,13 @@ export default function ImportQuotePage() {
       }
       return p;
     }));
+    const petIndex = pets.findIndex(p => p.id === id);
+    const errKey = `pet_${petIndex}_${field}`;
+    if (errors[errKey]) setErrors(prev => {
+      const newErrors = { ...prev };
+      delete newErrors[errKey];
+      return newErrors;
+    });
   };
 
   const validateStep = (step: number) => {
