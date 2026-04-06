@@ -86,12 +86,14 @@ export default function ImportQuotePage() {
     address1: "", address2: "", city: "", state: "", zip: "", country: "",
     originCountry: "", departureAirport: "", travelDate: "",
     transportMethod: [] as string[],
-    requireCollection: "",
-    requireDelivery: "",
-    deliveryAddress: "",
-    bloodTestAssistance: "",
-    alreadyHaveCrates: "",
-    supplyCrates: ""
+    originCollection: "",
+    slDoorDelivery: "",
+    slDeliveryAddress: "",
+    vaccinationRecords: null as File | null,
+    helpBloodTest: "",
+    haveCrates: "",
+    supplyCrates: "",
+    crateMeasurements: ""
   });
   
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -197,6 +199,14 @@ export default function ImportQuotePage() {
           if (!pet.measurements?.d) newErrors[`pet_${index}_d`] = "Required";
         }
       });
+    } else if (step === 3) {
+      if (!formData.vaccinationRecords) newErrors.vaccinationRecords = "Vaccination record required";
+      if (!formData.helpBloodTest) newErrors.helpBloodTest = "Selection required";
+      if (!formData.haveCrates) newErrors.haveCrates = "Selection required";
+      if (!formData.supplyCrates) newErrors.supplyCrates = "Selection required";
+      if (formData.supplyCrates === "No Thank You" && !formData.crateMeasurements) {
+        newErrors.crateMeasurements = "Crate measurements required";
+      }
     }
 
     setErrors(newErrors);
@@ -219,7 +229,6 @@ export default function ImportQuotePage() {
     e.preventDefault();
     if (validateStep(3)) {
       setIsSubmitting(true);
-      // Simulate API call
       setTimeout(() => {
         setIsSubmitting(false);
         setIsSubmitted(true);
@@ -258,7 +267,6 @@ export default function ImportQuotePage() {
 
   return (
     <div className="flex flex-col w-full bg-gray-50/50 min-h-screen">
-      {/* Header Section */}
       <section className="bg-white pt-24 pb-12 border-b border-gray-100 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-teal-600/5 rounded-full -mr-20 -mt-20 blur-3xl opacity-50"></div>
         <div className="container mx-auto px-4 relative z-10">
@@ -284,12 +292,10 @@ export default function ImportQuotePage() {
               >
                 <Section title="Step 1: Client & Travel Information" icon={<User className="w-4 h-4" />} stepNumber={1}>
                   <div className="space-y-8">
-                    {/* Client Info Header */}
                     <div className="border-b border-gray-100 pb-2">
                       <h3 className="text-sm font-black uppercase tracking-widest text-teal-600">Client Information</h3>
                     </div>
                     
-                    {/* Client Info Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3">
                       {[
                         { label: "First Name *", name: "firstName" },
@@ -325,7 +331,6 @@ export default function ImportQuotePage() {
                       <h3 className="text-sm font-black uppercase tracking-widest text-teal-600">Travel Information</h3>
                     </div>
 
-                    {/* Travel Info Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3">
                       <div className="space-y-1">
                         <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Country your pet(s) will be travelling from *</label>
@@ -365,7 +370,7 @@ export default function ImportQuotePage() {
                       <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 leading-tight">Do you require collection from your origin residence (Airport drop) ?</label>
                       <div className="flex gap-2">
                         {["Yes please", "No Thank You"].map(val => (
-                          <button key={val} type="button" onClick={() => setFormData(p => ({ ...p, requireCollection: val }))} className={cn("flex-1 py-1.5 rounded-lg border text-[10px] font-bold uppercase transition-all", formData.requireCollection === val ? "bg-teal-600 text-white border-teal-600" : "border-gray-100 text-gray-400")}>{val}</button>
+                          <button key={val} type="button" onClick={() => setFormData(p => ({ ...p, originCollection: val }))} className={cn("flex-1 py-1.5 rounded-lg border text-[10px] font-bold uppercase transition-all", formData.originCollection === val ? "bg-teal-600 text-white border-teal-600" : "border-gray-100 text-gray-400")}>{val}</button>
                         ))}
                       </div>
                     </div>
@@ -374,12 +379,22 @@ export default function ImportQuotePage() {
                       <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 leading-tight">Once the import clearance is complete in Sri Lanka; do you require door delivery from Colombo airport to your residence in Sri Lanka?</label>
                       <div className="flex gap-2">
                         {["Yes please", "No Thank You"].map(val => (
-                          <button key={val} type="button" onClick={() => setFormData(p => ({ ...p, requireDelivery: val }))} className={cn("flex-1 py-1.5 rounded-lg border text-[10px] font-bold uppercase transition-all", formData.requireDelivery === val ? "bg-teal-600 text-white border-teal-600" : "border-gray-100 text-gray-400")}>{val}</button>
+                          <button key={val} type="button" onClick={() => setFormData(p => ({ ...p, slDoorDelivery: val }))} className={cn("flex-1 py-1.5 rounded-lg border text-[10px] font-bold uppercase transition-all", formData.slDoorDelivery === val ? "bg-teal-600 text-white border-teal-600" : "border-gray-100 text-gray-400")}>{val}</button>
                         ))}
                       </div>
                       <AnimatePresence>
-                        {formData.requireDelivery === "Yes please" && (
-                          <motion.textarea initial={{ height: 0, opacity: 0 }} animate={{ height: 80, opacity: 1 }} exit={{ height: 0, opacity: 0 }} name="deliveryAddress" value={formData.deliveryAddress} onChange={handleInputChange} placeholder="Address in Sri Lanka..." className="w-full p-3 rounded-lg border border-gray-200 bg-gray-50/25 text-sm text-gray-900 focus:border-teal-600 outline-none" />
+                        {formData.slDoorDelivery === "Yes please" && (
+                          <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="space-y-1">
+                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Please provide delivery address in Sri Lanka *</label>
+                            <textarea 
+                              name="slDeliveryAddress" 
+                              value={formData.slDeliveryAddress} 
+                              onChange={handleInputChange} 
+                              placeholder="Address in Sri Lanka..." 
+                              className={cn("w-full h-20 p-3 rounded-lg border bg-gray-50/25 text-sm text-gray-900 focus:outline-none transition-all", errors.slDeliveryAddress ? "border-red-400" : "border-gray-200 focus:border-teal-600")} 
+                            />
+                            {errors.slDeliveryAddress && <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">{errors.slDeliveryAddress}</p>}
+                          </motion.div>
                         )}
                       </AnimatePresence>
                     </div>
@@ -522,13 +537,103 @@ export default function ImportQuotePage() {
               >
                 <Section title="Final Requirements" icon={<ShieldCheck className="w-5 h-5" />} stepNumber={3}>
                   <div className="space-y-6">
-                    <div className="space-y-2">
-                      <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Upload Vaccination Records *</label>
-                      <div className="border border-dashed border-gray-200 rounded-lg p-5 flex flex-col items-center bg-gray-50/25 group cursor-pointer hover:bg-teal-50/30 transition-colors">
-                        <Upload className="w-4 h-4 text-gray-300 mb-1 group-hover:text-teal-600" />
-                        <span className="text-[10px] font-bold uppercase text-gray-400 group-hover:text-teal-700">Click to upload</span>
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Upload Vaccination Records *</label>
+                        <div className="border border-dashed border-gray-200 rounded-lg p-5 flex flex-col items-center bg-gray-50/25 group cursor-pointer hover:bg-teal-50/30 transition-colors">
+                          <Upload className="w-4 h-4 text-gray-300 mb-1 group-hover:text-teal-600" />
+                          <span className="text-[10px] font-bold uppercase text-gray-400 group-hover:text-teal-700">Click to upload</span>
+                        </div>
+                        {errors.vaccinationRecords && <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight mt-1">{errors.vaccinationRecords}</p>}
                       </div>
-                    </div>
+
+                      {/* Blood Test Section */}
+                      <div className="space-y-4 p-4 rounded-xl bg-gray-50/30 border border-gray-100">
+                        <div className="flex flex-col gap-1">
+                          <h4 className="text-[10px] font-black uppercase tracking-widest text-teal-600">Blood Test Assistance</h4>
+                          <p className="text-[10px] font-bold text-gray-500 italic">In order to obtain the import permits, below blood tests must be done;</p>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="p-3 bg-white rounded-lg border border-gray-100">
+                            <h5 className="text-[9px] font-black uppercase text-teal-600 mb-1">Dogs</h5>
+                            <p className="text-[9px] font-bold text-gray-500">• Heartworm (Dirofilaria immitis), Leishmaniasis, Babesia Gibsoni, Babesia Canis</p>
+                          </div>
+                          <div className="p-3 bg-white rounded-lg border border-gray-100">
+                            <h5 className="text-[9px] font-black uppercase text-teal-600 mb-1">Cats</h5>
+                            <p className="text-[9px] font-bold text-gray-500">• Heartworm (Dirofilaria Immitis)</p>
+                          </div>
+                        </div>
+                        <div className="space-y-2">
+                          <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400 block h-6">Would you like us to help you with these tests? *</label>
+                          <div className="flex gap-4">
+                            {[
+                              { label: "Yes please help me", value: "Yes" }, 
+                              { label: "No I can get this done", value: "No" }
+                            ].map(v => (
+                              <button 
+                                key={v.value} type="button" onClick={() => setFormData(p => ({ ...p, helpBloodTest: v.value }))}
+                                className={cn("flex-1 py-1.5 rounded-lg border text-[10px] font-bold uppercase transition-all", formData.helpBloodTest === v.value ? "bg-teal-600 text-white border-teal-600 shadow-sm" : errors.helpBloodTest ? "border-red-400 text-red-500 bg-red-50/10" : "border-gray-100 text-gray-400 bg-white")}
+                              >
+                                {v.label}
+                              </button>
+                            ))}
+                          </div>
+                          {errors.helpBloodTest && <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">{errors.helpBloodTest}</p>}
+                        </div>
+                      </div>
+
+                      {/* Pet Travel Crates Section */}
+                      <div className="space-y-6 pt-2">
+                        <div className="space-y-3">
+                          <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Do you already have IATA certified International Pet Travel Crate(s) for your pet(s)? *</label>
+                          <div className="flex gap-4 max-w-sm">
+                            {["Yes", "No"].map(v => (
+                              <button 
+                                key={v} type="button" onClick={() => setFormData(p => ({ ...p, haveCrates: v }))}
+                                className={cn("flex-1 py-1.5 rounded-lg border text-[10px] font-bold uppercase transition-all", formData.haveCrates === v ? "bg-teal-600 text-white border-teal-600 shadow-sm" : errors.haveCrates ? "border-red-400 text-red-500 bg-red-50/10" : "border-gray-100 text-gray-400 bg-white")}
+                              >
+                                {v}
+                              </button>
+                            ))}
+                          </div>
+                          {errors.haveCrates && <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">{errors.haveCrates}</p>}
+                        </div>
+
+                        <div className="space-y-3">
+                          <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Do you want us to supply IATA certified International Pet Travel Crate(s) for your pet(s)? *</label>
+                          <div className="flex gap-4 max-w-sm">
+                            {["Yes please", "No Thank You"].map(v => (
+                              <button 
+                                key={v} type="button" onClick={() => setFormData(p => ({ ...p, supplyCrates: v }))}
+                                className={cn("flex-1 py-1.5 rounded-lg border text-[10px] font-bold uppercase transition-all", formData.supplyCrates === v ? "bg-teal-600 text-white border-teal-600 shadow-sm" : errors.supplyCrates ? "border-red-400 text-red-500 bg-red-50/10" : "border-gray-100 text-gray-400 bg-white")}
+                              >
+                                {v}
+                              </button>
+                            ))}
+                          </div>
+                          {errors.supplyCrates && <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">{errors.supplyCrates}</p>}
+                        </div>
+
+                        {/* Conditional Textarea for Crate Measurements */}
+                        <AnimatePresence>
+                          {formData.supplyCrates === "No Thank You" && (
+                            <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} exit={{ opacity: 0, height: 0 }} className="space-y-1">
+                              <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Please advise the external measurements of the crate(s) *</label>
+                              <textarea 
+                                value={formData.crateMeasurements} 
+                                onChange={(e) => {
+                                  setFormData(p => ({ ...p, crateMeasurements: e.target.value }));
+                                  if (errors.crateMeasurements) setErrors(prev => {
+                                    const n = { ...prev }; delete n.crateMeasurements; return n;
+                                  });
+                                }}
+                                className={cn("w-full h-24 p-3 rounded-lg border bg-white text-sm text-gray-900 focus:outline-none transition-all", errors.crateMeasurements ? "border-red-400" : "border-gray-200 focus:border-teal-600")}
+                                placeholder="e.g. Length x Width x Height in cm for each crate..."
+                              />
+                              {errors.crateMeasurements && <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">{errors.crateMeasurements}</p>}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
                   </div>
                   <div className="mt-8 flex items-center justify-between">
                     <button type="button" onClick={handleBack} className="flex items-center gap-2 text-gray-400 hover:text-gray-900 font-bold uppercase tracking-widest text-[10px] transition-colors"><ArrowLeft className="w-3 h-3" /> Back</button>
