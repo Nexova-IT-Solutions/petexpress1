@@ -7,9 +7,11 @@ import { Menu, X, ChevronDown } from "lucide-react";
 import Image from "next/image";
 
 import { Sidebar } from "./Sidebar";
+import { QuoteModal } from "@/components/ui/QuoteModal";
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-40 w-full bg-white/80 backdrop-blur-md border-b border-gray-200">
@@ -36,7 +38,11 @@ export function Header() {
              <Link href="/contact" className="text-zinc-500 hover:text-brand-red font-bold text-sm transition-colors uppercase tracking-widest">Support</Link>
           </div>
           
-          <Button variant="primary" className="rounded-full px-8 py-6 text-sm font-black uppercase tracking-tighter shadow-lg shadow-brand-red/20">
+          <Button 
+            variant="primary" 
+            className="rounded-full px-8 py-6 text-sm font-black uppercase tracking-tighter shadow-lg shadow-brand-red/20 hover:scale-105 active:scale-95 transition-transform"
+            onClick={() => setIsQuoteModalOpen(true)}
+          >
             Get a Quote
           </Button>
 
@@ -58,6 +64,12 @@ export function Header() {
           </div>
         </>
       )}
+
+      {/* Quote Modal */}
+      <QuoteModal 
+        isOpen={isQuoteModalOpen} 
+        onClose={() => setIsQuoteModalOpen(false)} 
+      />
     </header>
   );
 }
