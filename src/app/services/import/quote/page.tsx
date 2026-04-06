@@ -158,28 +158,29 @@ export default function ImportQuotePage() {
   const validateStep = (step: number) => {
     const newErrors: Record<string, string> = {};
     if (step === 1) {
-      if (!formData.firstName) newErrors.firstName = "Required";
-      if (!formData.lastName) newErrors.lastName = "Required";
-      if (!formData.email) newErrors.email = "Required";
-      if (!formData.phone) newErrors.phone = "Required";
-      if (!formData.address1) newErrors.address1 = "Required";
-      if (!formData.country) newErrors.country = "Required";
-      if (!formData.originCountry) newErrors.originCountry = "Required";
-      if (!formData.departureAirport) newErrors.departureAirport = "Required";
-      if (!formData.travelDate) newErrors.travelDate = "Required";
+      if (!formData.firstName) newErrors.firstName = "First name required";
+      if (!formData.lastName) newErrors.lastName = "Last name required";
+      if (!formData.email) newErrors.email = "Email address required";
+      if (!formData.phone) newErrors.phone = "Phone number required";
+      if (!formData.address1) newErrors.address1 = "Address required";
+      if (!formData.country) newErrors.country = "Country required";
+      if (!formData.originCountry) newErrors.originCountry = "Origin country required";
+      if (!formData.departureAirport) newErrors.departureAirport = "Departure airport required";
+      if (!formData.travelDate) newErrors.travelDate = "Travel date required";
     } else if (step === 2) {
       pets.forEach((pet, index) => {
-        if (!pet.name) newErrors[`pet_${index}_name`] = "Required";
-        if (!pet.dob) newErrors[`pet_${index}_dob`] = "Required";
-        if (!pet.type) newErrors[`pet_${index}_type`] = "Required";
-        if (!pet.breed) newErrors[`pet_${index}_breed`] = "Required";
-        if (!pet.gender) newErrors[`pet_${index}_gender`] = "Required";
+        if (!pet.name) newErrors[`pet_${index}_name`] = "Pet name required";
+        if (!pet.dob) newErrors[`pet_${index}_dob`] = "Date of birth required";
+        if (!pet.type) newErrors[`pet_${index}_type`] = "Animal type required";
+        if (!pet.breed) newErrors[`pet_${index}_breed`] = "Breed required";
+        if (!pet.gender) newErrors[`pet_${index}_gender`] = "Gender required";
+        if (!pet.microchipped) newErrors[`pet_${index}_microchipped`] = "Required";
         
         if (pet.type === "Dog") {
-          if (!pet.measurements?.a) newErrors[`pet_${index}_a`] = "Req";
-          if (!pet.measurements?.b) newErrors[`pet_${index}_b`] = "Req";
-          if (!pet.measurements?.c) newErrors[`pet_${index}_c`] = "Req";
-          if (!pet.measurements?.d) newErrors[`pet_${index}_d`] = "Req";
+          if (!pet.measurements?.a) newErrors[`pet_${index}_a`] = "Required";
+          if (!pet.measurements?.b) newErrors[`pet_${index}_b`] = "Required";
+          if (!pet.measurements?.c) newErrors[`pet_${index}_c`] = "Required";
+          if (!pet.measurements?.d) newErrors[`pet_${index}_d`] = "Required";
         }
       });
     }
@@ -291,16 +292,18 @@ export default function ImportQuotePage() {
                           <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">{field.label}</label>
                           <input 
                             type={field.type || "text"} name={field.name} value={(formData as any)[field.name]} onChange={handleInputChange}
-                            className={cn("w-full px-3 py-2 rounded-lg border bg-gray-50/25 text-sm text-gray-900 focus:outline-none focus:border-teal-600 transition-all", errors[field.name] ? "border-red-400" : "border-gray-200")}
+                            className={cn("w-full px-3 py-2 rounded-lg border bg-gray-50/25 text-sm text-gray-900 focus:outline-none transition-all", errors[field.name] ? "border-red-400" : "border-gray-200 focus:border-teal-600")}
                           />
+                          {errors[field.name] && <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">{errors[field.name]}</p>}
                         </div>
                       ))}
                       <div className="space-y-1">
                         <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Country *</label>
-                        <select name="country" value={formData.country} onChange={handleInputChange} className={cn("w-full px-3 py-2 rounded-lg border bg-gray-50/25 text-sm text-gray-900 focus:outline-none appearance-none cursor-pointer", errors.country ? "border-red-400" : "border-gray-200")}>
+                        <select name="country" value={formData.country} onChange={handleInputChange} className={cn("w-full px-3 py-2 rounded-lg border bg-gray-50/25 text-sm text-gray-900 focus:outline-none appearance-none cursor-pointer", errors.country ? "border-red-400" : "border-gray-200 focus:border-teal-600")}>
                           <option value="">Select Country</option>
                           {COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
                         </select>
+                        {errors.country && <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">{errors.country}</p>}
                       </div>
                     </div>
 
@@ -312,18 +315,21 @@ export default function ImportQuotePage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3">
                       <div className="space-y-1">
                         <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Country your pet(s) will be travelling from *</label>
-                        <select name="originCountry" value={formData.originCountry} onChange={handleInputChange} className={cn("w-full px-3 py-2 rounded-lg border bg-gray-50/25 text-sm text-gray-900 focus:outline-none", errors.originCountry ? "border-red-400" : "border-gray-200")}>
+                        <select name="originCountry" value={formData.originCountry} onChange={handleInputChange} className={cn("w-full px-3 py-2 rounded-lg border bg-gray-50/25 text-sm text-gray-900 focus:outline-none", errors.originCountry ? "border-red-400" : "border-gray-200 focus:border-teal-600")}>
                           <option value="">Select Origin</option>
                           {COUNTRIES.map(c => <option key={c} value={c}>{c}</option>)}
                         </select>
+                        {errors.originCountry && <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">{errors.originCountry}</p>}
                       </div>
                       <div className="space-y-1">
                         <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Airport of departure *</label>
-                        <input type="text" name="departureAirport" value={formData.departureAirport} onChange={handleInputChange} className={cn("w-full px-3 py-2 rounded-lg border bg-gray-50/25 text-sm text-gray-900 focus:outline-none", errors.departureAirport ? "border-red-400" : "border-gray-200")} />
+                        <input type="text" name="departureAirport" value={formData.departureAirport} onChange={handleInputChange} className={cn("w-full px-3 py-2 rounded-lg border bg-gray-50/25 text-sm text-gray-900 focus:outline-none", errors.departureAirport ? "border-red-400" : "border-gray-200 focus:border-teal-600")} />
+                        {errors.departureAirport && <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">{errors.departureAirport}</p>}
                       </div>
                       <div className="space-y-1">
                         <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Approximate travel dates *</label>
-                        <input type="date" name="travelDate" value={formData.travelDate} onChange={handleInputChange} className={cn("w-full px-3 py-2 rounded-lg border bg-gray-50/25 text-sm text-gray-900 focus:outline-none", errors.travelDate ? "border-red-400" : "border-gray-200")} />
+                        <input type="date" name="travelDate" value={formData.travelDate} onChange={handleInputChange} className={cn("w-full px-3 py-2 rounded-lg border bg-gray-50/25 text-sm text-gray-900 focus:outline-none", errors.travelDate ? "border-red-400" : "border-gray-200 focus:border-teal-600")} />
+                        {errors.travelDate && <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">{errors.travelDate}</p>}
                       </div>
                     </div>
 
@@ -386,40 +392,46 @@ export default function ImportQuotePage() {
                           <span className="text-[10px] font-black uppercase tracking-widest text-teal-600 bg-white px-2 py-0.5 rounded border border-teal-100">Pet {index + 1}</span>
                           {pets.length > 1 && <button type="button" onClick={() => removePet(pet.id)} className="text-red-300 hover:text-red-500 transition-colors"><Trash2 className="w-4 h-4" /></button>}
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-                          <div className="space-y-0.5">
-                            <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400">Pet Name *</label>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-2">
+                          <div className="space-y-1">
+                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Pet Name *</label>
                             <input type="text" value={pet.name} onChange={(e) => updatePet(pet.id, "name", e.target.value)} className={cn("w-full px-3 py-2 rounded-lg border bg-white text-sm text-gray-900 focus:outline-none transition-all", errors[`pet_${index}_name`] ? "border-red-400" : "border-gray-200 focus:border-teal-600")} />
+                            {errors[`pet_${index}_name`] && <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">{errors[`pet_${index}_name`]}</p>}
                           </div>
-                          <div className="space-y-0.5">
-                            <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400">Date of Birth *</label>
+                          <div className="space-y-1">
+                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Date of Birth *</label>
                             <input type="date" value={pet.dob} onChange={(e) => updatePet(pet.id, "dob", e.target.value)} className={cn("w-full px-3 py-2 rounded-lg border bg-white text-sm text-gray-900 focus:outline-none transition-all", errors[`pet_${index}_dob`] ? "border-red-400" : "border-gray-200 focus:border-teal-600")} />
+                            {errors[`pet_${index}_dob`] && <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">{errors[`pet_${index}_dob`]}</p>}
                           </div>
-                          <div className="space-y-0.5">
-                            <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400">Animal Type *</label>
+                          <div className="space-y-1">
+                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Animal Type *</label>
                             <select value={pet.type} onChange={(e) => updatePet(pet.id, "type", e.target.value)} className={cn("w-full px-3 py-2 rounded-lg border bg-white text-sm text-gray-900 focus:outline-none transition-all appearance-none cursor-pointer", errors[`pet_${index}_type`] ? "border-red-400" : "border-gray-200 focus:border-teal-600")}>
                               <option value="">Select Type</option>
                               {ANIMAL_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
                             </select>
+                            {errors[`pet_${index}_type`] && <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">{errors[`pet_${index}_type`]}</p>}
                           </div>
-                          <div className="space-y-0.5">
-                            <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400">Breed *</label>
+                          <div className="space-y-1">
+                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Breed *</label>
                             <input type="text" value={pet.breed} onChange={(e) => updatePet(pet.id, "breed", e.target.value)} className={cn("w-full px-3 py-2 rounded-lg border bg-white text-sm text-gray-900 focus:outline-none transition-all", errors[`pet_${index}_breed`] ? "border-red-400" : "border-gray-200 focus:border-teal-600")} />
+                            {errors[`pet_${index}_breed`] && <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">{errors[`pet_${index}_breed`]}</p>}
                           </div>
-                          <div className="space-y-0.5">
-                            <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400">Gender *</label>
+                          <div className="space-y-1">
+                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Gender *</label>
                             <select value={pet.gender} onChange={(e) => updatePet(pet.id, "gender", e.target.value)} className={cn("w-full px-3 py-2 rounded-lg border bg-white text-sm text-gray-900 focus:outline-none transition-all appearance-none cursor-pointer", errors[`pet_${index}_gender`] ? "border-red-400" : "border-gray-200 focus:border-teal-600")}>
                               <option value="">Select Gender</option>
                               {GENDERS.map(g => <option key={g} value={g}>{g}</option>)}
                             </select>
+                            {errors[`pet_${index}_gender`] && <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">{errors[`pet_${index}_gender`]}</p>}
                           </div>
-                          <div className="space-y-0.5">
-                            <label className="text-[9px] font-bold uppercase tracking-widest text-gray-400">Microchipped? *</label>
+                          <div className="space-y-1">
+                            <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Microchipped? *</label>
                             <div className="flex gap-2">
                               {["Yes", "No"].map(v => (
-                                <button key={v} type="button" onClick={() => updatePet(pet.id, "microchipped", v)} className={cn("flex-1 py-1.5 rounded-lg border text-[10px] font-bold uppercase transition-all", pet.microchipped === v ? "bg-teal-600 text-white border-teal-600 shadow-sm" : "border-gray-100 text-gray-400 bg-white")}>{v}</button>
+                                <button key={v} type="button" onClick={() => updatePet(pet.id, "microchipped", v)} className={cn("flex-1 py-1.5 rounded-lg border text-[10px] font-bold uppercase transition-all", pet.microchipped === v ? "bg-teal-600 text-white border-teal-600 shadow-sm" : errors[`pet_${index}_microchipped`] ? "border-red-400 text-red-400" : "border-gray-100 text-gray-400 bg-white")}>{v}</button>
                               ))}
                             </div>
+                            {errors[`pet_${index}_microchipped`] && <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight">{errors[`pet_${index}_microchipped`]}</p>}
                           </div>
                         </div>
 
