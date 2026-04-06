@@ -125,10 +125,12 @@ export default function ImportQuotePage() {
     supplyCrates: "",
     crateMeasurements: "",
   });
-
+  const [vaccinationFiles, setVaccinationFiles] = useState<File[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -253,7 +255,7 @@ export default function ImportQuotePage() {
         }
       });
     } else if (step === 3) {
-      if (!formData.vaccinationRecords)
+      if (vaccinationFiles.length === 0)
         newErrors.vaccinationRecords = "Vaccination record required";
       if (!formData.helpBloodTest)
         newErrors.helpBloodTest = "Selection required";
@@ -281,6 +283,24 @@ export default function ImportQuotePage() {
   const handleBack = () => {
     setCurrentStep((prev) => prev - 1);
     window.scrollTo({ top: 300, behavior: "smooth" });
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const newFiles = Array.from(e.target.files);
+      setVaccinationFiles((prev) => [...prev, ...newFiles]);
+      if (errors.vaccinationRecords) {
+        setErrors((prev) => {
+          const n = { ...prev };
+          delete n.vaccinationRecords;
+          return n;
+        });
+      }
+    }
+  };
+
+  const removeFile = (index: number) => {
+    setVaccinationFiles((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -466,7 +486,7 @@ export default function ImportQuotePage() {
                               )}
                             >
                               {formData.transportMethod.includes(m) && (
-                                <CheckCircle2 className="w-3.5 h-3.5 stroke-[3]" />
+                                <CheckCircle2 className="w-3.5 h-3.5 stroke-3" />
                               )}
                             </div>
                             <span
@@ -842,12 +862,61 @@ export default function ImportQuotePage() {
                       <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
                         Upload Vaccination Records *
                       </label>
-                      <div className="border border-dashed border-gray-200 rounded-lg p-5 flex flex-col items-center bg-gray-50/25 group cursor-pointer hover:bg-red-50/30 transition-colors">
-                        <Upload className="w-4 h-4 text-gray-300 mb-1 group-hover:text-import-red" />
-                        <span className="text-[10px] font-bold uppercase text-gray-400 group-hover:text-import-red">
-                          Click to upload
+                      <input
+                        type="file"
+                        ref={fileInputRef}
+                        onChange={handleFileChange}
+                        multiple
+                        className="hidden"
+                        accept=".pdf,.jpg,.jpeg,.png"
+                      />
+                      <div
+                        onClick={() => fileInputRef.current?.click()}
+                        className="border border-dashed border-gray-200 rounded-xl p-6 flex flex-col items-center bg-gray-50/25 group cursor-pointer hover:bg-red-50/30 transition-all"
+                      >
+                        <div className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center mb-2 group-hover:scale-110 transition-transform">
+                          <Upload className="w-4 h-4 text-gray-400 group-hover:text-import-red" />
+                        </div>
+                        <span className="text-[10px] font-black uppercase tracking-widest text-gray-400 group-hover:text-import-red">
+                          Click to upload records
                         </span>
+                        <p className="text-[9px] text-gray-300 mt-1">
+                          PDF, JPG or PNG (Max 5MB)
+                        </p>
                       </div>
+
+                      {vaccinationFiles.length > 0 && (
+                        <div className="mt-4 space-y-2">
+                          {vaccinationFiles.map((file, idx) => (
+                            <div
+                              key={idx}
+                              className="flex items-center justify-between p-3 bg-white rounded-lg border border-gray-100 group hover:border-red-100 transition-colors"
+                            >
+                              <div className="flex items-center gap-3">
+                                <div className="w-8 h-8 rounded bg-red-50 flex items-center justify-center">
+                                  <ShieldCheck className="w-4 h-4 text-import-red" />
+                                </div>
+                                <div className="flex flex-col">
+                                  <span className="text-[10px] font-bold text-gray-700 truncate max-w-[200px]">
+                                    {file.name}
+                                  </span>
+                                  <span className="text-[9px] text-gray-400">
+                                    {(file.size / 1024).toFixed(0)} KB
+                                  </span>
+                                </div>
+                              </div>
+                              <button
+                                type="button"
+                                onClick={() => removeFile(idx)}
+                                className="p-2 text-gray-300 hover:text-red-500 transition-colors"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
                       {errors.vaccinationRecords && (
                         <p className="text-[10px] font-bold text-red-500 uppercase tracking-tight mt-1">
                           {errors.vaccinationRecords}
