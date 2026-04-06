@@ -447,7 +447,7 @@ export default function ImportQuotePage() {
                       <label className="text-[10px] font-bold uppercase tracking-widest text-gray-400">
                         Method of transporting pets
                       </label>
-                      <div className="flex flex-col gap-2">
+                      <div className="flex flex-col gap-3 pt-1">
                         {[
                           "Accompanied Baggage / Excess Baggage",
                           "Manifested Air Freight Cargo under an Air Waybill",
@@ -455,26 +455,30 @@ export default function ImportQuotePage() {
                           <div
                             key={m}
                             onClick={() => handleCheckboxChange(m)}
-                            className={cn(
-                              "flex items-center gap-2 p-2 px-3 rounded-lg border cursor-pointer text-xs transition-all",
-                              formData.transportMethod.includes(m)
-                                ? "border-import-red bg-red-50/30 text-import-red"
-                                : "border-gray-100 bg-gray-50/20 text-gray-500",
-                            )}
+                            className="flex items-center gap-3 cursor-pointer group"
                           >
                             <div
                               className={cn(
-                                "w-4 h-4 rounded border flex items-center justify-center shrink-0",
+                                "w-5 h-5 rounded border-2 flex items-center justify-center shrink-0 transition-all",
                                 formData.transportMethod.includes(m)
                                   ? "border-import-red bg-import-red text-white"
-                                  : "border-gray-300 bg-white",
+                                  : "border-gray-200 bg-white group-hover:border-import-red/50",
                               )}
                             >
                               {formData.transportMethod.includes(m) && (
-                                <CheckCircle2 className="w-3 h-3" />
+                                <CheckCircle2 className="w-3.5 h-3.5 stroke-[3]" />
                               )}
                             </div>
-                            {m}
+                            <span
+                              className={cn(
+                                "text-xs font-bold transition-colors",
+                                formData.transportMethod.includes(m)
+                                  ? "text-gray-900"
+                                  : "text-gray-500 group-hover:text-gray-700",
+                              )}
+                            >
+                              {m}
+                            </span>
                           </div>
                         ))}
                       </div>
