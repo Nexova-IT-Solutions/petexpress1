@@ -19,7 +19,7 @@ export function QuoteModal({ isOpen, onClose }: QuoteModalProps) {
       className="max-w-md"
     >
       <div className="grid gap-4">
-        <Link href="/services/import" className="block" onClick={onClose}>
+        <Link href="/services/import/quote" className="block" onClick={onClose}>
           <div className="group relative flex items-center gap-4 rounded-2xl border-2 border-gray-100 p-5 transition-all hover:border-brand-red hover:bg-brand-red/5">
             <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-brand-red/10 text-brand-red transition-transform group-hover:scale-110">
               <PlaneLanding className="h-7 w-7" />
